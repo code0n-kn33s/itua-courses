@@ -1,0 +1,19 @@
+html{
+  font-size: 10px;
+  font-family: 'PT Sans Narrow', sans-serif;
+}
+
+body{
+  box-sizing: border-box;
+  padding: 10px 20px 30px;
+}
+h1{
+  font-size: 4rem;
+}
+h2{
+  font-size: 3rem;
+  color: #414141;
+}
+.myText{
+  font-size: 2rem;
+}
