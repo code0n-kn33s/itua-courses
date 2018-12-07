@@ -1,20 +1,24 @@
-let headerJson = {
-  title: 'lesson-1',
-  props: {
-    hw: [
+let lessonsJSON = [
+  {
+    title: "lesson-1",
+    id: 0,
+    props: [
       {
+        id: this.id++,
         available: true,
         title: "Arrays",
         type: "home-work",
         description: "Practice methods of arrays"
       },
       {
+        id: this.id++,
         available: true,
         title: "Companies",
         type: "home-work",
         description: "Make table companies, employers and sort"
       },
       {
+        id: this.id++,
         available: true,
         title: "Likes",
         type: "class-work",
@@ -22,9 +26,9 @@ let headerJson = {
       }
     ]
   },
-  title: 'lesson-2',
-  props: {
-    hw: [
+  {
+    title: "lesson-2",
+    props: [
       {
         available: true,
         title: "Boorger",
@@ -57,4 +61,4 @@ let headerJson = {
       }
     ]
   }
-};
+]

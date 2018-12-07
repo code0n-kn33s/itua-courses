@@ -1,13 +1,17 @@
 // HEADER
+let li = `<li><a href="sass.html">Sass</a></li>`;
+let loc = document.querySelector("title").innerText;
+let arr = ['a','b','c'];
+
 let tempHeader = `
   <nav class="nav-extended teal lighten-2">
     <div class="nav-wrapper">
-      <a href="#" class="brand-logo">Logo</a>
+      <a href="#" class="brand-logo">
+        ${ 'logo' }
+      </a>
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="sass.html">Sass</a></li>
-        <li><a href="badges.html">Components</a></li>
-        <li><a href="collapsible.html">JavaScript</a></li>
+        ${ arr.map(i => `<li>${i}</li>`).join('') }
       </ul>
     </div>
     <div class="nav-content">
@@ -31,3 +35,4 @@ let header = document.createElement('div')
 header.innerHTML = tempHeader;
 document.body.insertBefore(header, document.body.firstChild);
 
+console.log(lessonsJSON);

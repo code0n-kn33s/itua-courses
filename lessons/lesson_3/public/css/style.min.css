@@ -1,0 +1,9 @@
+html{
+  font-family: sans-serif;
+  /* background: #eee; */
+}
+.wrap{
+  width: 100vw;
+  box-sizing: border-box;
+  padding: 10px 30px 30px;
+}
