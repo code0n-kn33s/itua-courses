@@ -6,3 +6,20 @@ html, body {
   padding: 0;
   margin: 0;
 }
+
+h4 {
+  color: #ee6e73;
+  font-weight: 300;
+}
+
+pre {
+  line-height: 1.2em;
+  background: linear-gradient(180deg,#ccc 0,#ccc 1.2em,#eee 0);
+  background-size: 2.4em 2.4em;
+  background-origin: content-box;
+
+  /* some extra styles*/
+  padding: 0 20px;
+  text-align: justify;
+  font-family: calibri,arial,sans-serif;
+}

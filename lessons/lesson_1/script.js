@@ -1,4 +1,4 @@
-// Students
+// Students pass exam
 let Discipline = function () {
   this.obj = 'Engineering'
   this.teacher = 'Obragimov San Sanich'
@@ -37,3 +37,4 @@ console.log(vovochka)
 students.push(vovochka)
 
 console.log(students);
+

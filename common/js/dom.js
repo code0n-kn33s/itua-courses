@@ -2,21 +2,23 @@
 let li = `<li><a href="sass.html">Sass</a></li>`;
 let loc = document.querySelector("title").innerText;
 let id = loc.charAt(loc.length-1);
-console.log(loc);
+
 let tempHeader = `
-  <nav class="nav-extended teal lighten-2">
+  <nav class="nav-extended indigo darken-2">
     <div class="nav-wrapper">
       <a href="./../index.html" class="right brand-logo">
         ${loc}
       </a>
       <ul id="nav-mobile" class="left hide-on-med-and-down">
         ${lessonsJSON
-          .map(item =>
+          .map(
+            item =>
               `<li class="tab">
                 <a href="../../lessons/lesson_${item.id}/lesson${item.id}.html">
                   lesson-${item.id}
                 </a>
-              </li>`)
+              </li>`
+          )
           .join("")}
       </ul>
     </div>
