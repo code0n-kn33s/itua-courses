@@ -8,13 +8,24 @@
   <title>Start page</title>
 </head>
 <body>
-  <h1>h1 here</h1>
-  <a href="./lessons/lesson_1/index.html">lesson1</a>
-  <a href="./lessons/lesson_2/index.html">lesson2</a>
-  
+  <nav class="nav-extended teal lighten-2">
+    <div class="nav-wrapper">
+      <a href="#" class="left brand-logo">
+        ITea prof
+      </a>
+      <ul id="nav-mobile" class="left hide-on-med-and-down"></ul>
+    </div>
+  </nav>
   <script src="./common/libs/materialize/dist/js/materialize.min.js"></script>
   <script src="./common/js/json.js"></script>
-  <script src="./common/js/dom.js"></script>
+  <script>
+    let lessonsLinks = `${lessonsJSON.map(item =>
+          `<li class="tab">
+            <a href="${item.url.slice(6)}">${item.title}</a>
+          </li>`).join("")}`
+
+    document.querySelector('#nav-mobile').innerHTML = lessonsLinks
+  </script>
   <script src="./common/js/common.js"></script>
 </body>
 </html>

@@ -1,5 +1,4 @@
 /*
-
   Модули в JS
   https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Statements/import
 
@@ -16,8 +15,8 @@
   "scripts": {
     "cli": "webpack ./application/index.js --output-path ./public/js --output-filename bundle.js --mode development --color --watch"
   }
-
 */
+
   `webpack
       ./application/index.js
       --output-path ./public/js
@@ -34,6 +33,6 @@
 
 */
 
-  // import imports from './imports';
+  import imports from './imports';
 
   console.log('WEBPACK WORKING!')

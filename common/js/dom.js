@@ -1,38 +1,38 @@
 // HEADER
 let li = `<li><a href="sass.html">Sass</a></li>`;
 let loc = document.querySelector("title").innerText;
-let arr = ['a','b','c'];
-
+let id = loc.charAt(loc.length-1);
+console.log(loc);
 let tempHeader = `
   <nav class="nav-extended teal lighten-2">
     <div class="nav-wrapper">
-      <a href="#" class="brand-logo">
-        ${ 'logo' }
+      <a href="./../index.html" class="right brand-logo">
+        ${loc}
       </a>
-      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        ${ arr.map(i => `<li>${i}</li>`).join('') }
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        ${lessonsJSON
+          .map(item =>
+              `<li class="tab">
+                <a href="../../lessons/lesson_${item.id}/lesson${item.id}.html">
+                  lesson-${item.id}
+                </a>
+              </li>`)
+          .join("")}
       </ul>
     </div>
     <div class="nav-content">
       <ul class="tabs tabs-transparent">
-        <li class="tab"><a href="#test1">Test 1</a></li>
-        <li class="tab"><a class="active" href="#test2">Test 2</a></li>
-        <li class="tab"><a href="#test3">Tab 3</a></li>
-        <li class="tab"><a href="#test4">Test 4</a></li>
+        ${lessonsJSON[id - 1].props
+          .map(
+            item =>
+              `<li class="tab"><a href="#test${item.id}">${item.title}</a></li>`
+          )
+          .join("")}
       </ul>
     </div>
   </nav>
-
-  <ul class="sidenav" id="mobile-demo">
-    <li><a href="sass.html">Sass</a></li>
-    <li><a href="badges.html">Components</a></li>
-    <li><a href="collapsible.html">JavaScript</a></li>
-  </ul>
 `;
 
-let header = document.createElement('div')
+let header = document.createElement('div');
 header.innerHTML = tempHeader;
 document.body.insertBefore(header, document.body.firstChild);
-
-console.log(lessonsJSON);

@@ -29,8 +29,7 @@ const Mediator = () => {
     tipTheMonitor(){}
   }
 
-  // Monitor == Староста
-  class Monitor extends Student{
+  class Starosta extends Student{
     constructor(name){}
     addToGroup(){}
     askProfessor(){}

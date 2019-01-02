@@ -66,7 +66,7 @@ const ObjectFreezeDemo = () => {
   let frozenUniverse = Object.freeze(universe);
       // frozenUniverse.humans = [];
       frozenUniverse.evil.humans = [];
-      
+
       console.log(frozenUniverse);
 };
 

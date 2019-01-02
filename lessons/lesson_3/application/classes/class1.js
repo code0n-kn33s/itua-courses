@@ -1,5 +1,6 @@
-class test1{
+class test1 {
   //...
 }
+
 
 export default test1;

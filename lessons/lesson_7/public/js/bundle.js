@@ -81,44 +81,20 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./application/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./source/cli_entry.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./application/command/index.js":
-/*!**************************************!*\
-  !*** ./application/command/index.js ***!
-  \**************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./source/cli_entry.js":
+/*!*****************************!*\
+  !*** ./source/cli_entry.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/*\n  Command:\n  Команда — это поведенческий паттерн проектирования,\n  который превращает запросы в объекты, позволяя передавать их\n  как аргументы при вызове методов, ставить запросы в очередь,\n  логировать их, а также поддерживать отмену операций.\n\n*/\n\nconst Command = () => {\n\n\n  class Calc {\n    constructor(){\n      this.currentValue = 0;\n    }\n    // add( value ){\n    //   this.currentValue += value;\n    //   console.log('new value:', this.currentValue );\n    // }\n    // sub( value ){\n    //   this.currentValue -= value;\n    //   console.log('new value:', this.currentValue );\n    // }\n    execute( command ){\n      this.currentValue = command.execute( this.currentValue );\n    }\n    getCurrentValue(){\n      console.log('CurrentValue is:', this.currentValue);\n      return( this.currentValue );\n    }\n\n  }\n\n\n  // const SuperCalc = new Calc();\n  //\n  // SuperCalc.add(50);\n  // SuperCalc.add(30);\n  // SuperCalc.sub(3);\n  // SuperCalc.getCurrentValue();\n\n\n  function Command(fn, value) {\n      this.execute = fn;\n      this.value = value;\n  }\n\n  function AddCommand(value){\n    Command.call( this, function( value ){\n      return value + this.value;\n    }, value);\n  }\n\n  const x = new Calc();\n  x.execute( new AddCommand( 20 ) );\n  x.getCurrentValue();\n\n\n\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Command);\n\n\n//# sourceURL=webpack:///./application/command/index.js?");
-
-/***/ }),
-
-/***/ "./application/index.js":
-/*!******************************!*\
-  !*** ./application/index.js ***!
-  \******************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _mediator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mediator */ \"./application/mediator/index.js\");\n/* harmony import */ var _command__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./command */ \"./application/command/index.js\");\n\n\n\n// Mediator();\nObject(_command__WEBPACK_IMPORTED_MODULE_1__[\"default\"])();\n\n\n//# sourceURL=webpack:///./application/index.js?");
-
-/***/ }),
-
-/***/ "./application/mediator/index.js":
-/*!***************************************!*\
-  !*** ./application/mediator/index.js ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nconst MediatorClasses = () => {\n\n  class Flight {\n    constructor( name ){\n      this.name = name;\n      this.controlRoom = null;\n\n      console.log(`Flight ${name} in progress`, this);\n    }\n    receive( message, from ){\n      console.log(`${from.name} to ${this.name}: ${message}`);\n    }\n    send( message, to ){\n      if( this.controlRoom !== null){\n        this.controlRoom.send( message, this, to );\n      } else {\n        console.warn(`${this.name} - you can't send message, until you dont connected to control room`);\n      }\n    }\n  } \n  /*  - - - - - */\n\n  let Alpha = new Flight('Alpha');\n  let Bravo = new Flight('Bravo');\n  let Beta = new Flight('Beta');\n\n  console.log('- - - - - - - - -');\n\n  Alpha.receive('Welcome in Ukraine!', {name: 'SBU'});\n  Bravo.receive('Who are you?', {name: 'SBU'});\n  Bravo.send(`Don't shoot me pls!`);\n\n  /* - - - - - */\n\n  class ControlRoom{\n    constructor( name ){\n      this.name = name;\n      this.connectedFlights = {};\n      }\n    register (flight) {\n        this.connectedFlights[flight.name] = flight;\n        flight.controlRoom = this;\n\n        console.log(`New flight '${flight.name}' registered in control room ${name}`);\n        console.log('List or registered:', this.connectedFlights );\n    }\n    send( message, from, to ){\n      // console.log(\n      //   'message:', message,\n      //   '\\nfrom:', from,\n      //   '\\nthis:', this,\n      //   '\\nconnectedFlights:', this.connectedFlights\n      // );\n      if( to !== undefined ){\n        to.receive( message, from );\n      } else {\n        for( let key in this.connectedFlights ){\n          if( this.connectedFlights[key] !== from ){\n            this.connectedFlights[key].receive(message, from);\n          }\n        }\n      } // else\n    } // send\n\n  } // control room\n  /*  - - - - - */\n  //\n  const Borispol = new ControlRoom('Borispol');\n  console.log('- - - - - - - - -');\n  Borispol.register(Alpha);\n  Borispol.register(Bravo);\n  Borispol.register(Beta);\n  console.log('- - - - - - - - -');\n  Beta.send('Hello, Kyiv! How\\'s the weather?');\n  Alpha.send('Hello guys! It\\s rainy, probably we need go to Harkiv or Odessa');\n  Alpha.send('Shoot Beta! Probably he\\'s a terrorist!', Bravo)\n\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (MediatorClasses);\n\n\n//# sourceURL=webpack:///./application/mediator/index.js?");
+eval("\n\nconsole.log('CLI WORKING');\n\n//# sourceURL=webpack:///./source/cli_entry.js?");
 
 /***/ })
 
