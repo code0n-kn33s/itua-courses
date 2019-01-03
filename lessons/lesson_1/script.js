@@ -36,5 +36,6 @@ vovochka.interests = ['football', 'volleyball']
 console.log(vovochka)
 students.push(vovochka)
 
+document.querySelector('.task1').innerHTML = `${students}`
 console.log(students);
 
