@@ -1,3 +1,9 @@
 node_modules
-common/libs
+lessons/lesson_1/node_modules
+lessons/lesson_2/node_modules
+lessons/lesson_3/node_modules
+lessons/lesson_4/node_modules
+lessons/lesson_5/node_modules
+lessons/lesson_6/node_modules
 lessons/lesson_7/node_modules
+lessons/lesson_8/node_modules
