@@ -13,13 +13,28 @@ h4 {
 }
 
 pre {
-  line-height: 1.2em;
-  background: linear-gradient(180deg,#ccc 0,#ccc 1.2em,#eee 0);
-  background-size: 2.4em 2.4em;
+  line-height: 1em;
   background-origin: content-box;
-
-  /* some extra styles*/
   padding: 0 20px;
+  white-space: pre-wrap;
   text-align: justify;
   font-family: calibri,arial,sans-serif;
+}
+
+.hljs-line-numbers {
+	text-align: right;
+	color: #999;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+  user-select: none;
+}
+.hljs-ln-numbers{
+  padding: 3px 3px !important;
+  width: 30px !important;
+}
+.task {
+
 }

@@ -4,7 +4,7 @@ let loc = document.querySelector("title").innerText;
 let id = loc.charAt(loc.length-1);
 
 let tempHeader = `
-  <nav class="nav-extended indigo darken-2">
+  <nav class="nav-extended deep-purple darken-4">
     <div class="nav-wrapper">
       <a href="./../index.html" class="right brand-logo">
         ${loc}

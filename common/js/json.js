@@ -5,19 +5,26 @@ let lessonsJSON = [
       {
         id: 1,
         available: true,
-        title: "Arrays",
+        title: "Pass exam",
         type: "home-work",
         description: "Practice methods of arrays"
       },
       {
         id: 2,
         available: true,
+        title: "Arrays",
+        type: "home-work",
+        description: "Practice methods of arrays"
+      },
+      {
+        id: 3,
+        available: true,
         title: "Companies",
         type: "home-work",
         description: "Make table companies, employers and sort"
       },
       {
-        id: 3,
+        id: 4,
         available: true,
         title: "Likes",
         type: "class-work",

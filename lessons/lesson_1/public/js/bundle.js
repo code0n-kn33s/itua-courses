@@ -81,19 +81,19 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./common/js/imports.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./script.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./common/js/imports.js":
-/*!******************************!*\
-  !*** ./common/js/imports.js ***!
-  \******************************/
+/***/ "./script.js":
+/*!*******************!*\
+  !*** ./script.js ***!
+  \*******************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("lesson1 = () => {\n\n}\n\n//# sourceURL=webpack:///./common/js/imports.js?");
+eval("\n\nconsole.log('ITEA_COURSES');\n\n//# sourceURL=webpack:///./script.js?");
 
 /***/ })
 
