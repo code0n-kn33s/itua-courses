@@ -1,3 +1,5 @@
+// export * as exams
+
 // TASK 1 - Students pass exam
 let Discipline = function() {
   this.obj = "Engineering";
@@ -50,4 +52,4 @@ document.querySelector(".task1-2").innerHTML =
   `Student.prototype.perfomance = ${Student.prototype.perfomance} `;
 
 document.querySelector(".task1-4").innerHTML =
-  `JSON.stringify(vovochka) = ${JSON.stringify(vovochka)} `;
+  `JSON.stringify(vovochka): <br> ${JSON.stringify(vovochka)} `;

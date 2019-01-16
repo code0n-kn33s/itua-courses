@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "cli": "webpack ./common/js/imports.js --output-path ./common/js --output-filename bundle.js --env development --mode development --color --watch"
+    "cli": "webpack --config webpack.config.js"
   },
   "author": "",
   "license": "ISC",
@@ -12,5 +12,8 @@
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@babel/core": "^7.2.2",
+    "babel-loader": "^8.0.5"
+  }
 }
