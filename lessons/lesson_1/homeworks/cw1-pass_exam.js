@@ -1,13 +1,23 @@
-// export * as exams
-
 // TASK 1 - Students pass exam
-let Discipline = function() {
-  this.obj = "Engineering";
-  this.teacher = "Obragimov San Sanich";
+let Discipline = function(discipline) {
+  this.obj = discipline;
+
+  switch(discipline) {
+    case('engine'):
+      this.teacher = "Irina Anatolievna"
+      break
+    case('computers'):
+      this.teacher = "Anna Josipevna"
+      break
+    case('philosophy'):
+      this.teacher = "Ibragimov"
+      break
+    }
 };
 
-let Student = function(name, visits) {
-  Discipline.call(this);
+
+let Student = function(name, visits, discipline) {
+  Discipline.call(this, discipline);
 
   this.name = name;
   this.visits = visits;
@@ -26,20 +36,11 @@ Student.prototype.perfomance = function(attend) {
 
 let students = [];
 
-students.push(new Student("Kola", 14));
-students.push(new Student("Masha", 20));
-students.push(new Student("Sasha", 9));
-students.push(new Student("Marina", 17));
+students.push(new Student("Masha", 20, 'engine'));
+students.push(new Student("Sasha", 9, 'philosophy'));
+students.push(new Student("Marina", 17, 'computers'));
 
-let vovochka = new Student("Vovochka", 2);
-vovochka.age = 14;
-vovochka.hobby = ["football", "volleyball"];
-
-console.log(vovochka);
-students.push(vovochka);
-
-console.log(students);
-console.log(JSON.stringify(vovochka));
+let vovochka = new Student("Vovochka", 2, 'philosophy');
 
 //вывод на экран
 document.querySelector(".task1-0").innerHTML =
@@ -51,5 +52,6 @@ document.querySelector(".task1-1").innerHTML =
 document.querySelector(".task1-2").innerHTML =
   `Student.prototype.perfomance = ${Student.prototype.perfomance} `;
 
-document.querySelector(".task1-4").innerHTML =
-  `JSON.stringify(vovochka): <br> ${JSON.stringify(vovochka)} `;
+parseObj(vovochka, $('.card-student'), 'vovochka')
+
+parseObj(students, $('.students'), 'students')
