@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = "./lessons/lesson_5/script.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -94,17 +94,6 @@
 /***/ (function(module, exports) {
 
 eval("\n\n//# sourceURL=webpack:///./lessons/lesson_5/script.js?");
-
-/***/ }),
-
-/***/ 4:
-/*!******************************************!*\
-  !*** multi ./lessons/lesson_5/script.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("module.exports = __webpack_require__(/*! ./lessons/lesson_5/script.js */\"./lessons/lesson_5/script.js\");\n\n\n//# sourceURL=webpack:///multi_./lessons/lesson_5/script.js?");
 
 /***/ })
 

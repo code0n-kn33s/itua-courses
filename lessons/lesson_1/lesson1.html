@@ -30,12 +30,24 @@
       экзамену</blockquote>
     <pre><code class="task1-2"></code></pre>
     <blockquote>Создадим студента Вовочку</blockquote>
-    <pre><code class="task1-3">let vovochka = new Student('Vovochka', 2)
-    vovochka.age = 14
-    vovochka.hobby = ['football', 'volleyball']
-    </code></pre>
-    <blockquote>Вот что мы получим на выходе</blockquote>
+    <pre><code class="task1-3">let vovochka = new Student('Vovochka', 2, 'philosophy')</code></pre>
     <div class="card-student"></div>
+
+    <blockquote>Id высчитывал по замыканию</blockquote>
+    <pre><code>let c = () => { n = 1; return () => n++ }; 
+      d = c(); 
+      d() // 1, 
+      d() // 2...
+        or
+      Student.count = 1;
+      let Cstr = function() {
+        Student.count++
+        console.log(Student.count)
+      }
+      
+      new Cstr // 1 
+      new Cstr // 2 
+      new Cstr // 3 </code></pre>
     <!-- // test 1 -->
   </div>
   <div id="test2" class="col s12">
@@ -84,9 +96,11 @@
   <script src="../../common/libs/highlight.pack.js"></script>
   <script src="../../common/libs/highlightjs-line-numbers.min.js"></script>
   <script src="../../common/libs/materialize.min.js"></script>
+
   <script src="../../common/js/json.js"></script>
   <script src="../../common/js/dom.js"></script>
   <script src="../../common/js/common.js"></script>
+  
   <script src="../../common/lessons/lesson1.js"></script>
 
 </body>

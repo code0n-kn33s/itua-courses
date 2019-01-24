@@ -11,4 +11,4 @@
 const ITEA_COURSES = ["Курс HTML & CSS", "JavaScript базовый курс", "JavaScript продвинутый курс", "JavaScript Professional", "Angular 2.4 (базовый)", "Angular 2.4 (продвинутый)", "React.js", "React Native", "Node.js", "Vue.js", ];
 
 
-parseArr(ITEA_COURSES, $('.task3-1'), "Массив по задаче")
+// parseArr(ITEA_COURSES, $('.task3-1'), "Массив по задаче")

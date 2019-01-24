@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = "./lessons/lesson_2/script.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -106,17 +106,6 @@ eval("/*\r\n\r\n  Задание - используя классы и (или) �
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _homeworks_zoo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./homeworks/zoo */ \"./lessons/lesson_2/homeworks/zoo.js\");\n/* harmony import */ var _homeworks_zoo__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_homeworks_zoo__WEBPACK_IMPORTED_MODULE_0__);\n\n\n//# sourceURL=webpack:///./lessons/lesson_2/script.js?");
-
-/***/ }),
-
-/***/ 1:
-/*!******************************************!*\
-  !*** multi ./lessons/lesson_2/script.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("module.exports = __webpack_require__(/*! ./lessons/lesson_2/script.js */\"./lessons/lesson_2/script.js\");\n\n\n//# sourceURL=webpack:///multi_./lessons/lesson_2/script.js?");
 
 /***/ })
 

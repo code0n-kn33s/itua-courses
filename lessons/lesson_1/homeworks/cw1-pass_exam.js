@@ -1,32 +1,37 @@
 // TASK 1 - Students pass exam
-let Discipline = function(discipline) {
+let Discipline = function (discipline) {
+  this.id = this.closureId()
+
   this.obj = discipline;
 
-  switch(discipline) {
-    case('engine'):
+  switch (discipline) {
+    case ('maths'):
       this.teacher = "Irina Anatolievna"
       break
-    case('computers'):
+    case ('computers'):
       this.teacher = "Anna Josipevna"
       break
-    case('philosophy'):
+    case ('philosophy'):
       this.teacher = "Ibragimov"
       break
-    }
+  }
 };
 
-
-let Student = function(name, visits, discipline) {
+let Student = function (name, visits, discipline) {
+  // инициализируем клас Discipline c параметром предмета 
+  // который будет проходить черес кейсы и подтягивать имя преподавателя
   Discipline.call(this, discipline);
 
   this.name = name;
   this.visits = visits;
-
   this.pass = this.visits > 15 && this.visits <= 20 ? true : false;
   this.perfomance = this.perfomance(this.visits);
 };
 
-Student.prototype.perfomance = function(attend) {
+Student.prototype.countId = () => { n = 1; return () => n++ }
+Student.prototype.closureId = Student.prototype.countId()
+
+Student.prototype.perfomance = function (attend) {
   if (attend === 20) return "excellent";
   if (attend >= 15 && attend < 20) return "good";
   if (attend >= 10 && attend < 15) return "ternary";
@@ -36,7 +41,7 @@ Student.prototype.perfomance = function(attend) {
 
 let students = [];
 
-students.push(new Student("Masha", 20, 'engine'));
+students.push(new Student("Masha", 20, 'maths'));
 students.push(new Student("Sasha", 9, 'philosophy'));
 students.push(new Student("Marina", 17, 'computers'));
 
@@ -52,6 +57,9 @@ document.querySelector(".task1-1").innerHTML =
 document.querySelector(".task1-2").innerHTML =
   `Student.prototype.perfomance = ${Student.prototype.perfomance} `;
 
-parseObj(vovochka, $('.card-student'), 'vovochka')
+  //Используем конструктор TABLE - ./dom.js
+new Table(vovochka, $('.card-student'), 'vovochka')
+new Table(students, $('.students'), 'students', true)
 
-parseObj(students, $('.students'), 'students')
+// tableStudents.createHeadButton()
+// tableStudents.createBobyButtons()

@@ -45,4 +45,3 @@ let tank = new Tank('New tank ready', 6)
 // tank.fireTo()
 
 $('.code-2-1').innerHTML = Tank
-console.log(tank);
