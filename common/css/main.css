@@ -1,17 +1,15 @@
 * {
   box-sizing: border-box;
+  outline: none !important;
 }
-
 html, body {
   padding: 0;
   margin: 0;
 }
-
 h4 {
   color: #ee6e73;
   font-weight: 300;
 }
-
 pre {
   line-height: 1em;
   background-origin: content-box;
@@ -20,7 +18,9 @@ pre {
   text-align: justify;
   font-family: calibri,arial,sans-serif;
 }
-
+select.default {
+  display: block;
+}
 .hljs-line-numbers {
 	text-align: right;
 	color: #999;
@@ -35,10 +35,9 @@ pre {
   padding: 3px 3px !important;
   width: 30px !important;
 }
-.task {
-
+.input-field {
+  margin: 0;
 }
-
 @media only screen and (min-width: 993px) {
   #toast-container {
     top: 7%;

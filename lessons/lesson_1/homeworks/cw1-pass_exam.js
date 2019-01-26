@@ -1,24 +1,21 @@
 // TASK 1 - Students pass exam
 let Discipline = function (discipline) {
   this.id = this.closureId()
-
   this.obj = discipline;
 
-  switch (discipline) {
-    case ('maths'):
-      this.teacher = "Irina Anatolievna"
-      break
-    case ('computers'):
-      this.teacher = "Anna Josipevna"
-      break
-    case ('philosophy'):
-      this.teacher = "Ibragimov"
-      break
-  }
+  this.__proto__.base = [
+    { disc: "math", teacher: "Irina Anatolievna" },
+    { disc: "computers", teacher: "Anna Josipevna" },
+    { disc: "philosophy", teacher: "Ibragimov" },
+  ]
+
+  Object.values(this.__proto__.base).forEach(value => {
+    if (value.disc == discipline) this.teacher = value.teacher
+  })
 };
 
 let Student = function (name, visits, discipline) {
-  // инициализируем клас Discipline c параметром предмета 
+  // инициализируем клас Discipline c параметром предмета
   // который будет проходить черес кейсы и подтягивать имя преподавателя
   Discipline.call(this, discipline);
 
@@ -41,7 +38,7 @@ Student.prototype.perfomance = function (attend) {
 
 let students = [];
 
-students.push(new Student("Masha", 20, 'maths'));
+students.push(new Student("Masha", 20, 'math'));
 students.push(new Student("Sasha", 9, 'philosophy'));
 students.push(new Student("Marina", 17, 'computers'));
 
@@ -58,8 +55,5 @@ document.querySelector(".task1-2").innerHTML =
   `Student.prototype.perfomance = ${Student.prototype.perfomance} `;
 
   //Используем конструктор TABLE - ./dom.js
-new Table(vovochka, $('.card-student'), 'vovochka')
-new Table(students, $('.students'), 'students', true)
-
-// tableStudents.createHeadButton()
-// tableStudents.createBobyButtons()
+new Table(vovochka, $('.card-student'), 'vovochka')  // c кнопками
+new Table(students, $('.students'), 'students', true) // без кнопок

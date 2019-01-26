@@ -63,13 +63,13 @@ Table.prototype.parseObj = function() {
         <thead>
           <tr>
             ${Object.keys(this.obj).map(value => `<th>${value}</th>`).join('')}
-          </tr> 
-        </thead> 
+          </tr>
+        </thead>
         <tbody>
           <tr data-id="${this.obj.id}">
             ${Object.values(this.obj).map(value => `<td>${value}</td>`).join('')}
-          </tr> 
-        </tbody> 
+          </tr>
+        </tbody>
       </table><br>`
 
     this.elem.innerHTML += table
@@ -81,15 +81,15 @@ Table.prototype.parseObj = function() {
           <thead>
             <tr>
               ${Object.keys(this.obj[0]).map(value => `<th>${value}</th>`).join('')}
-            </tr> 
-          </thead> 
+            </tr>
+          </thead>
           <tbody>
             ${this.obj.map((parseObj) => `
               <tr data-id="${parseObj.id}">
                 ${Object.values(parseObj).map(value => `<td>${value}</td>`).join('')}
               </tr>
             `).join('')}
-          </tbody> 
+          </tbody>
         </table><br>`
 
     this.elem.innerHTML += table
@@ -108,43 +108,69 @@ Table.prototype.createHeadButton = function () {
 // кнопки в теле таблици
 Table.prototype.createBodyButtons = function () {
   this.tableBody.forEach( item => {
-    this.tdBody = document.createElement('td')
-    this.tdBody.innerHTML = `${createButton('cut', 'content_cut')} ${createButton('edit', 'edit')}`
-    item.appendChild(this.tdBody)
+    const tdBody = document.createElement('td')
+    tdBody.innerHTML = `${createButton('cut', 'content_cut')} ${createButton('edit', 'edit')}`
+    item.appendChild(tdBody)
 
-    this.tdBody.querySelector('.cut').onclick = () => item.remove()
+    tdBody.querySelector('.cut').onclick = () => item.remove()
 
-    this.tdBody.querySelector('.edit').onclick = () => {
+    tdBody.querySelector('.edit').onclick = () => {
       this.createUser(this.obj[item.getAttribute('data-id') - 1], item)
     }
   })
 }
 
 Table.prototype.createUser = function(obj, item) {
+  const tdBody = document.createElement('td')
+
+  setTeacher = () => {
+    obj.obj = event.target.value
+
+    obj.__proto__.base.forEach(value => {
+      if (value.disc == event.target.value) obj.teacher = value.teacher
+    })
+
+    $('.teacher').innerHTML = obj.teacher
+  }
+
   let tableItem =
-    ` 
+    `
       <td>${obj.id}</td>
-      <td>${obj.obj}</td> 
-      <td>${obj.teacher}</td> 
-      <td>${obj.name}</td> 
-      <td>${obj.visits}</td> 
-      <td>${obj.pass}</td> 
-      <td>${obj.perfomance}</td> 
+      <td>
+        <select onchange="setTeacher()" class="default">
+          ${Object.values(obj.__proto__.base).map(value =>
+            `<option value="${value.disc}" data-teacher=${value.teacher}>${value.disc}</option>`
+          ).join('')}
+        </select>
+      </td>
+      <td class="teacher">
+        ${obj.teacher}
+      </td>
+      <td>
+        <div class="input-field col s6">
+          <input id="student_name" type="text" class="validate">
+          <label for="student_name">${obj.name}</label>
+        </div>
+      </td>
+      <td>
+        <p class="range-field">
+          <input type="range" id="test5" min="0" max="20" />
+        </p>
+      </td>
+      <td>${obj.pass}</td>
+      <td>${obj.perfomance}</td>
     `
   item.innerHTML = tableItem
-  console.log(item);
-  console.log(obj);
-  console.log(tableItem);
-  
-  this.tdBody.innerHTML = `${createButton('close', 'close')} ${createButton('done', 'done')} `
-  item.appendChild(this.tdBody)
 
-  // tdBody.querySelector('.close').onclick = () => {
-  //   this.createUser(this.obj[item.getAttribute('data-id') - 1], item)
+  tdBody.innerHTML = `${createButton('undo', 'undo')} ${createButton('done', 'done')} `
+  item.appendChild(tdBody)
 
-  //   tdBody.innerHTML = `${createButton('cut', 'content_cut')} ${createButton('edit', 'edit')}`
-  //   item.appendChild(tdBody)
-  // }
+  tdBody.querySelector('.undo').onclick = () => {
+    this.createUser(this.obj[item.getAttribute('data-id') - 1], item)
+
+    tdBody.innerHTML = `${createButton('cut', 'content_cut')} ${createButton('edit', 'edit')}`
+    item.appendChild(tdBody)
+  }
 
   // tdBody.querySelector('.done').onclick = () => {
   //   this.createUser(this.obj[item.getAttribute('data-id') - 1], item)
@@ -155,21 +181,21 @@ Table.prototype.createUser = function(obj, item) {
 }
 
 //toasts
-document.querySelectorAll('.menu-item').forEach(menuItem => menuItem.onclick = function() { 
-  M.toast({ html: this.innerHTML }) 
+document.querySelectorAll('.menu-item').forEach(menuItem => menuItem.onclick = function() {
+  M.toast({ html: this.innerHTML })
 })
 
 //lists
 //create table from object and array
 let arrToList = function (arr, elem, title) {
-  let table = ` 
+  let table = `
     <h3>${title || ''}</h3>
-    <table> 
+    <table>
       <thead>
         <tr>
           ${arr.map(value => `<td>${value}</td>`).join('')}
         </tr>
-      </thead> 
+      </thead>
     </table><br>`
   elem.innerHTML += table
 }
