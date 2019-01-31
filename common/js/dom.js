@@ -39,7 +39,7 @@ document.body.insertBefore(header, document.body.firstChild);
 
 // TABLES
 let Table = function (obj, elem, title, buttons) {
-  this.obj = obj
+  this.subj = obj
   this.elem = elem
   this.title = title
 
@@ -55,19 +55,19 @@ let Table = function (obj, elem, title, buttons) {
 }
 
 Table.prototype.parseObj = function() {
-  if (!Array.isArray(this.obj)) {
+  if (!Array.isArray(this.subj)) {
     let table =
       `
       <h3>${this.title || ''}</h3>
       <table>
         <thead>
           <tr>
-            ${Object.keys(this.obj).map(value => `<th>${value}</th>`).join('')}
+            ${Object.keys(this.subj).map(value => `<th>${value}</th>`).join('')}
           </tr>
         </thead>
         <tbody>
-          <tr data-id="${this.obj.id}">
-            ${Object.values(this.obj).map(value => `<td>${value}</td>`).join('')}
+          <tr data-id="${this.subj.id}">
+            ${Object.values(this.subj).map(value => `<td>${value}</td>`).join('')}
           </tr>
         </tbody>
       </table><br>`
@@ -80,11 +80,11 @@ Table.prototype.parseObj = function() {
       <table>
           <thead>
             <tr>
-              ${Object.keys(this.obj[0]).map(value => `<th>${value}</th>`).join('')}
+              ${Object.keys(this.subj[0]).map(value => `<th>${value}</th>`).join('')}
             </tr>
           </thead>
           <tbody>
-            ${this.obj.map((parseObj) => `
+            ${this.subj.map((parseObj) => `
               <tr data-id="${parseObj.id}">
                 ${Object.values(parseObj).map(value => `<td>${value}</td>`).join('')}
               </tr>
@@ -99,8 +99,7 @@ Table.prototype.parseObj = function() {
 // кнопки в теле таблици
 Table.prototype.createHeadButton = function () {
   const tdHead = document.createElement('td')
-  tdHead.innerHTML =
-    `<a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>`
+  tdHead.innerHTML = createButton('add', 'add', 'large')
 
   this.tableHead.appendChild(tdHead)
 }
@@ -115,16 +114,17 @@ Table.prototype.createBodyButtons = function () {
     tdBody.querySelector('.cut').onclick = () => item.remove()
 
     tdBody.querySelector('.edit').onclick = () => {
-      this.createUser(this.obj[item.getAttribute('data-id') - 1], item)
+      this.createUser(this.subj[item.getAttribute('data-id') - 1], item)
     }
   })
 }
 
 Table.prototype.createUser = function(obj, item) {
   const tdBody = document.createElement('td')
+  let newObj = {}
 
   setTeacher = () => {
-    obj.obj = event.target.value
+    obj.subj = event.target.value
 
     obj.__proto__.base.forEach(value => {
       if (value.disc == event.target.value) obj.teacher = value.teacher
@@ -133,9 +133,19 @@ Table.prototype.createUser = function(obj, item) {
     $('.teacher').innerHTML = obj.teacher
   }
 
+  setPerformance = () => {
+    let value = event.target.value;
+    rangeValue()
+
+    item.querySelector('.student-pass').innerHTML = 
+      obj.__proto__.pass(value);
+    
+    item.querySelector('.student-perfomance').innerHTML =     
+      obj.__proto__.perfomance(value);
+  }
+  
   let tableItem =
-    `
-      <td>${obj.id}</td>
+    ` <td data-id="${obj.id}">${obj.id}</td>
       <td>
         <select onchange="setTeacher()" class="default">
           ${Object.values(obj.__proto__.base).map(value =>
@@ -148,32 +158,35 @@ Table.prototype.createUser = function(obj, item) {
       </td>
       <td>
         <div class="input-field col s6">
-          <input id="student_name" type="text" class="validate">
-          <label for="student_name">${obj.name}</label>
+          <input id="student_name-${obj.id}" type="text" class="validate">
+          <label for="student_name-${obj.id}">${obj.name}</label>
         </div>
       </td>
-      <td>
-        <p class="range-field">
-          <input type="range" id="test5" min="0" max="20" />
-        </p>
+      <td>  
+        ${createRange(20, obj.visits, 100, 'setPerformance()' )}
       </td>
-      <td>${obj.pass}</td>
-      <td>${obj.perfomance}</td>
-    `
+      <td class="student-pass" width="100">${obj.pass}</td>
+      <td class="student-perfomance" width="140">${obj.perfomance}</td>`
+
   item.innerHTML = tableItem
 
-  tdBody.innerHTML = `${createButton('undo', 'undo')} ${createButton('done', 'done')} `
+  tdBody.innerHTML =  ` ${createButton('undo', 'undo')} 
+                        ${createButton('done', 'done')} `
+
   item.appendChild(tdBody)
 
+  // undo button
   tdBody.querySelector('.undo').onclick = () => {
-    this.createUser(this.obj[item.getAttribute('data-id') - 1], item)
+    this.createUser(this.subj[item.getAttribute('data-id') - 1], item)
 
-    tdBody.innerHTML = `${createButton('cut', 'content_cut')} ${createButton('edit', 'edit')}`
+    tdBody.innerHTML = `${createButton('cut', 'content_cut')} 
+                        ${createButton('edit', 'edit')}`
+
     item.appendChild(tdBody)
   }
 
   // tdBody.querySelector('.done').onclick = () => {
-  //   this.createUser(this.obj[item.getAttribute('data-id') - 1], item)
+  //   this.createUser(this.subj[item.getAttribute('data-id') - 1], item)
 
   //   tdBody.innerHTML = `${createButton('cut', 'content_cut')} ${createButton('edit', 'edit')}`
   //   item.appendChild(tdBody)
@@ -181,28 +194,41 @@ Table.prototype.createUser = function(obj, item) {
 }
 
 //toasts
-document.querySelectorAll('.menu-item').forEach(menuItem => menuItem.onclick = function() {
-  M.toast({ html: this.innerHTML })
+document.querySelectorAll('.menu-item').forEach(
+  menuItem => menuItem.onclick = function() {
+    M.toast({ html: this.innerHTML })
 })
 
-//lists
-//create table from object and array
-let arrToList = function (arr, elem, title) {
-  let table = `
-    <h3>${title || ''}</h3>
-    <table>
-      <thead>
-        <tr>
-          ${arr.map(value => `<td>${value}</td>`).join('')}
-        </tr>
-      </thead>
-    </table><br>`
-  elem.innerHTML += table
+//create list from array
+function parseArr(arr, title) {
+  return `<h3>${title || ''}</h3>
+          <ul>
+            ${arr.map(value => `<li>${value}</li>`).join('')}
+          </ul><br>`
 }
 
-//Create button round. Flag - its class, Icon - icon
-function createButton(flag, icon) {
-  return `<a class="${flag} btn-floating btn-small waves-effect waves-light red">
+//Create button round.
+function createButton(clas, icon, size) {
+  return `<a  class="${clas} 
+              btn-floating btn-${size ? size : `small`} 
+              waves-effect waves-light red">
             <i class="material-icons">${icon}</i>
           </a>`
+}
+
+//Create input RANGE.
+function createRange(max, value, width, func) {
+  return  ` <div class="range-value">${value ? value : 0}</div>
+            <input  oninput="${func ? func : 'rangeValue()'}" 
+                    type="range" min="0" max="${max}" step="1" 
+                    value="${value ? value : 0}" 
+                    style="width:${width ? width : 150}px"> `
+}
+
+var rangeValue = function (elem) {
+  let el = elem ? elem : event.target,
+      value = el.value,
+      valueTarget = el.previousElementSibling;
+
+  valueTarget.innerHTML = value
 }

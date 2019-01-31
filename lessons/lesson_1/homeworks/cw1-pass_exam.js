@@ -1,7 +1,7 @@
 // TASK 1 - Students pass exam
 let Discipline = function (discipline) {
   this.id = this.closureId()
-  this.obj = discipline;
+  this.subj = discipline;
 
   this.__proto__.base = [
     { disc: "math", teacher: "Irina Anatolievna" },
@@ -21,16 +21,20 @@ let Student = function (name, visits, discipline) {
 
   this.name = name;
   this.visits = visits;
-  this.pass = this.visits > 15 && this.visits <= 20 ? true : false;
+  this.pass = this.pass(this.visits);
   this.perfomance = this.perfomance(this.visits);
 };
 
 Student.prototype.countId = () => { n = 1; return () => n++ }
 Student.prototype.closureId = Student.prototype.countId()
 
+Student.prototype.pass = function (attend) {
+  return attend > 15 && attend <= 20 ? true : false
+}
+
 Student.prototype.perfomance = function (attend) {
-  if (attend === 20) return "excellent";
-  if (attend >= 15 && attend < 20) return "good";
+  if (attend >= 18 && attend <= 20) return "excellent";
+  if (attend >= 15 && attend < 18) return "good";
   if (attend >= 10 && attend < 15) return "ternary";
   if (attend >= 5 && attend < 10) return "badly";
   return "Welcome to academ holidays";
@@ -38,9 +42,9 @@ Student.prototype.perfomance = function (attend) {
 
 let students = [];
 
-students.push(new Student("Masha", 20, 'math'));
+students.push(new Student("Masha", 18, 'math'));
 students.push(new Student("Sasha", 9, 'philosophy'));
-students.push(new Student("Marina", 17, 'computers'));
+students.push(new Student("Marina", 16, 'computers'));
 
 let vovochka = new Student("Vovochka", 2, 'philosophy');
 
