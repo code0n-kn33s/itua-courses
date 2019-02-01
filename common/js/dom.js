@@ -42,7 +42,8 @@ let Table = function (obj, elem, title, buttons) {
   this.subj = obj
   this.elem = elem
   this.title = title
-
+  this.editObjs = []
+  
   this.parseObj()
 
   this.tableHead = this.elem.querySelector('table thead tr');
@@ -50,21 +51,20 @@ let Table = function (obj, elem, title, buttons) {
 
   if (buttons) {
     this.createHeadButton()
-    this.createBodyButtons()
+    this.createBodyButtons(this.tableBody)
   }
 }
 
-Table.prototype.parseObj = function() {
+Table.prototype.parseObj = function(header) {
   if (!Array.isArray(this.subj)) {
     let table =
-      `
-      <h3>${this.title || ''}</h3>
+      `<h3>${this.title || ''}</h3>
       <table>
-        <thead>
+        ${ (!header) ? `<thead>
           <tr>
             ${Object.keys(this.subj).map(value => `<th>${value}</th>`).join('')}
           </tr>
-        </thead>
+        </thead>` : `` }
         <tbody>
           <tr data-id="${this.subj.id}">
             ${Object.values(this.subj).map(value => `<td>${value}</td>`).join('')}
@@ -78,11 +78,9 @@ Table.prototype.parseObj = function() {
       `
       <h3>${this.title || ''}</h3>
       <table>
-          <thead>
-            <tr>
+          ${ (!header) ? `<thead><tr>
               ${Object.keys(this.subj[0]).map(value => `<th>${value}</th>`).join('')}
-            </tr>
-          </thead>
+            </tr></thead>` : ``}
           <tbody>
             ${this.subj.map((parseObj) => `
               <tr data-id="${parseObj.id}">
@@ -101,12 +99,12 @@ Table.prototype.createHeadButton = function () {
   const tdHead = document.createElement('td')
   tdHead.innerHTML = createButton('add', 'add', 'large')
 
-  this.tableHead.appendChild(tdHead)
+  if (this.tableHead) this.tableHead.appendChild(tdHead)
 }
 
 // кнопки в теле таблици
-Table.prototype.createBodyButtons = function () {
-  this.tableBody.forEach( item => {
+Table.prototype.createBodyButtons = function (elems) {
+  elems.forEach( item => {
     const tdBody = document.createElement('td')
     tdBody.innerHTML = `${createButton('cut', 'content_cut')} ${createButton('edit', 'edit')}`
     item.appendChild(tdBody)
@@ -121,39 +119,53 @@ Table.prototype.createBodyButtons = function () {
 
 Table.prototype.createUser = function(obj, item) {
   const tdBody = document.createElement('td')
-  let newObj = {}
+  
+  let newObj = Object.assign({},obj)
+  this.editObjs.push(newObj);
 
-  setTeacher = () => {
-    obj.subj = event.target.value
+  setTeacher = (index) => {
+    const closestTeacher = event.target.parentNode.parentNode.querySelector('.teacher')
 
+    this.editObjs.forEach(obj => { if (obj.id === index) return thisObj = obj } )
+   
+    thisObj.subj = event.target.value
+ 
     obj.__proto__.base.forEach(value => {
-      if (value.disc == event.target.value) obj.teacher = value.teacher
+      if (value.disc == event.target.value) thisObj.teacher = value.teacher
     })
 
-    $('.teacher').innerHTML = obj.teacher
+    closestTeacher.innerHTML = thisObj.teacher
   }
 
-  setPerformance = () => {
+  setPerformance = (index) => {
+    const closest = event.target.parentNode.parentNode
+
+    this.editObjs.forEach(obj => { if (obj.id === index) return thisObj = obj })
+
     let value = event.target.value;
     rangeValue()
 
-    item.querySelector('.student-pass').innerHTML = 
+    closest.querySelector('.student-pass').innerHTML = 
       obj.__proto__.pass(value);
     
-    item.querySelector('.student-perfomance').innerHTML =     
+    closest.querySelector('.student-perfomance').innerHTML =     
       obj.__proto__.perfomance(value);
+
+    thisObj.visits = value
+    thisObj.perfomance = obj.__proto__.perfomance(value)
+    thisObj.pass = obj.__proto__.pass(value)
   }
-  
+
   let tableItem =
     ` <td data-id="${obj.id}">${obj.id}</td>
       <td>
-        <select onchange="setTeacher()" class="default">
-          ${Object.values(obj.__proto__.base).map(value =>
-            `<option value="${value.disc}" data-teacher=${value.teacher}>${value.disc}</option>`
+        <select onchange="setTeacher(${obj.id})" class="default" value="${obj.subj}">
+          ${Object.values(obj.__proto__.base).map( (value, index) =>
+            `<option value="${value.disc}" ${(obj.subj == value.disc) ? `selected` : ``}>${value.disc}</option>`
           ).join('')}
         </select>
       </td>
-      <td class="teacher">
+      <td class="teacher" width="150">
         ${obj.teacher}
       </td>
       <td>
@@ -163,7 +175,7 @@ Table.prototype.createUser = function(obj, item) {
         </div>
       </td>
       <td>  
-        ${createRange(20, obj.visits, 100, 'setPerformance()' )}
+        ${createRange(20, obj.visits, 100, `setPerformance(${obj.id})` )}
       </td>
       <td class="student-pass" width="100">${obj.pass}</td>
       <td class="student-perfomance" width="140">${obj.perfomance}</td>`
@@ -176,21 +188,35 @@ Table.prototype.createUser = function(obj, item) {
   item.appendChild(tdBody)
 
   // undo button
-  tdBody.querySelector('.undo').onclick = () => {
-    this.createUser(this.subj[item.getAttribute('data-id') - 1], item)
+  tdBody.querySelector('.done').onclick = () => {
+    let td = event.target.parentNode.parentNode.parentNode
+    let thisObj = newObj
+    const id = td.getAttribute('data-id')
 
-    tdBody.innerHTML = `${createButton('cut', 'content_cut')} 
-                        ${createButton('edit', 'edit')}`
+    let html = 
+    `<tr data-id="${thisObj.id}">
+      ${Object.values(thisObj).map(value => `<td>${value}</td>`).join('')}
+    </tr>`
 
-    item.appendChild(tdBody)
+    td.innerHTML = html
+    this.createBodyButtons([td])
   }
 
-  // tdBody.querySelector('.done').onclick = () => {
-  //   this.createUser(this.subj[item.getAttribute('data-id') - 1], item)
+  tdBody.querySelector('.undo').onclick = () => {
+    //создать изменения на инпут 
+    //отредактировать ундо
+    let td = event.target.parentNode.parentNode.parentNode
+    let thisObj = newObj
+    const id = td.getAttribute('data-id')
 
-  //   tdBody.innerHTML = `${createButton('cut', 'content_cut')} ${createButton('edit', 'edit')}`
-  //   item.appendChild(tdBody)
-  // }
+    let html =
+      `<tr data-id="${thisObj.id}">
+      ${Object.values(thisObj).map(value => `<td>${value}</td>`).join('')}
+    </tr>`
+
+    td.innerHTML = html
+    this.createBodyButtons([td])
+  }
 }
 
 //toasts
