@@ -1,2 +1,1 @@
-npm i -g node-static //установленный глобально статический сервер -> static // его запуск
-
+git hub pages - https://code0n-kn33s.github.io/itua-courses/lessons/lesson_1/lesson1.html

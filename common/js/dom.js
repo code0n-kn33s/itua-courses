@@ -49,7 +49,7 @@ let Table = function (obj, elem, title, buttons) {
   this.tableBody = this.elem.querySelectorAll('table tbody tr');
 
   if (buttons) {
-    this.createHeadButton()
+    // this.createHeadButton()
     this.createBodyButtons(this.tableBody)
   }
 }
@@ -76,17 +76,27 @@ Table.prototype.parseObj = function(header) {
 }
 
 // кнопки в теле таблици
-Table.prototype.createHeadButton = function () {
-  const tdHead = document.createElement('td')
-  tdHead.innerHTML = createButton('add', 'add', 'large')
+// Table.prototype.createHeadButton = function () {
+//   const tdHead = document.createElement('td')
+//   tdHead.innerHTML = createButton('add', 'add', 'large')
 
-  if (this.tableHead) this.tableHead.appendChild(tdHead)
+//   if (this.tableHead) this.tableHead.appendChild(tdHead)
 
-  tdHead.querySelector('.add').onclick = () => {
-    // this.editStudents({}, this)
-    console.log(this.elem.querySelector('tbody'));
-  }
-}
+//   tdHead.querySelector('.add').onclick = () => {
+//     // console.log(this.object);
+//     // console.log(this.elem.querySelector('tbody'));
+//     let tr = document.createElement('tr')
+//     let createNewItem = Object.assign({}, this.obj[0])
+
+//     for(key in createNewItem) {
+//       createNewItem[key] = ''
+//     }
+//     let created = this.elem.querySelector('tbody').appendChild(tr)
+
+//     createNewItem.__proto__ = this.obj[0].__proto__
+//     this.editStudents(createNewItem, created)
+//   }
+// }
 
 // кнопки в теле таблици
 Table.prototype.createBodyButtons = function (elems) {
@@ -197,7 +207,7 @@ Table.prototype.editStudents = function(obj, item) {
     </tr>`
 
     td.innerHTML = html
-    // this.createBodyButtons([td])
+    this.createBodyButtons([td])
   }
 
   tdBody.querySelector('.undo').onclick = () => {
@@ -211,7 +221,7 @@ Table.prototype.editStudents = function(obj, item) {
       </tr>`
 
     td.innerHTML = html
-    // this.createBodyButtons([td])
+    this.createBodyButtons([td])
   }
 }
 

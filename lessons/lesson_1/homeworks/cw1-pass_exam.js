@@ -61,37 +61,3 @@ document.querySelector(".task1-2").innerHTML =
   //Используем конструктор TABLE - ./dom.js
 new Table([vovochka], $('.card-student'), 'vovochka')  // c кнопками
 new Table(students, $('.students'), 'students', true) // без кнопок
-
-let blabla = [
-  {
-    id: 1,
-    direction: 'Ghitomir',
-    markAvto: 'Reno',
-    namePass: 'Alex',
-    agePass: 16
-  },
-  {
-    id: 2,
-    direction: 'Lvov',
-    markAvto: 'Ferrary',
-    namePass: 'Oksa',
-    agePass: 32
-  },
-  {
-    id: 3,
-    direction: 'Rivne',
-    markAvto: 'Mers',
-    namePass: 'Sawa',
-    agePass: 21
-  },
-  {
-    id: 4,
-    direction: 'Volgograd',
-    markAvto: 'Mitsubishi',
-    namePassanger: 'Givi',
-    agePass: 28
-  }
-]
-console.log(blabla);
-console.log($('.blabla'));
-new Table(blabla, $('.blabla'), 'Blablacar', true)
