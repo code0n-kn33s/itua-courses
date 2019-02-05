@@ -14,13 +14,27 @@ let Discipline = function (discipline) {
   })
 };
 
+Discipline.prototype.filterTeacher = function() {
+  return [
+    { disc: "math", teacher: "Irina Anatolievna" },
+    { disc: "computers", teacher: "Anna Josipevna" },
+    { disc: "philosophy", teacher: "Ibragimov" },
+  ]
+}
+
+Discipline.prototype.base = [
+  { disc: "math", teacher: "Irina Anatolievna" },
+  { disc: "computers", teacher: "Anna Josipevna" },
+  { disc: "philosophy", teacher: "Ibragimov" },
+];
+
 let Student = function (name, visits, discipline) {
   // инициализируем клас Discipline c параметром предмета
   // который будет проходить черес кейсы и подтягивать имя преподавателя
   Discipline.call(this, discipline);
 
   this.name = name;
-  this.visits = visits;
+  this.visits = visits ? visits : visits = 0
   this.pass = this.pass(this.visits);
   this.perfomance = this.perfomance(this.visits);
 };
@@ -60,4 +74,4 @@ document.querySelector(".task1-2").innerHTML =
 
   //Используем конструктор TABLE - ./dom.js
 new Table([vovochka], $('.card-student'), 'vovochka')  // c кнопками
-new Table(students, $('.students'), 'students', true) // без кнопок
+new Table(students, $('.students'), 'students', true, Student) // без кнопок

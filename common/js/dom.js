@@ -1,47 +1,11 @@
-// HEADER
-const $ = (selector) => document.querySelector(selector);
-const $w = (selector) => document.querySelectorAll(selector);
-
-let loc = document.querySelector("title").innerText;
-let id = loc.charAt(loc.length-1);
-
-let tempHeader = `
-  <nav class="nav-extended cyan darken-3">
-    <div class="nav-wrapper">
-      <a href="./../index.html" class="right brand-logo">
-        ${loc}
-      </a>
-      <ul id="nav-mobile" class="left hide-on-med-and-down">
-        ${lessonsJSON.map(item =>
-              `<li class="tab">
-                <a href="../../lessons/lesson_${item.id}/lesson${item.id}.html">
-                  lesson-${item.id}
-                </a>
-              </li>`).join("")}
-      </ul>
-    </div>
-    <div class="nav-content">
-      <ul class="tabs tabs-transparent">
-        ${lessonsJSON[id - 1].props
-          .map(
-            item =>
-              `<li class="tab"><a class="menu-item" href="#test${item.id}">${item.title}</a></li>`
-          )
-          .join("")}
-      </ul>
-    </div>
-  </nav>`;
-
-let header = document.createElement('div');
-header.innerHTML = tempHeader;
-document.body.insertBefore(header, document.body.firstChild);
-
 // TABLES
-let Table = function (obj, elem, title, buttons) {
+let Table = function (obj, elem, title, buttons, obj_coustructor) {
   this.obj = obj
   this.elem = elem
   this.title = title
   this.editObjs = []
+
+  this.func = obj_coustructor;
 
   this.parseObj()
 
@@ -49,7 +13,7 @@ let Table = function (obj, elem, title, buttons) {
   this.tableBody = this.elem.querySelectorAll('table tbody tr');
 
   if (buttons) {
-    // this.createHeadButton()
+    this.createHeadButton()
     this.createBodyButtons(this.tableBody)
   }
 }
@@ -76,27 +40,19 @@ Table.prototype.parseObj = function(header) {
 }
 
 // кнопки в теле таблици
-// Table.prototype.createHeadButton = function () {
-//   const tdHead = document.createElement('td')
-//   tdHead.innerHTML = createButton('add', 'add', 'large')
+Table.prototype.createHeadButton = function () {
+  const tdHead = document.createElement('td')
+  tdHead.innerHTML = createButton('add', 'add', 'large')
 
-//   if (this.tableHead) this.tableHead.appendChild(tdHead)
+  if (this.tableHead) this.tableHead.appendChild(tdHead)
 
-//   tdHead.querySelector('.add').onclick = () => {
-//     // console.log(this.object);
-//     // console.log(this.elem.querySelector('tbody'));
-//     let tr = document.createElement('tr')
-//     let createNewItem = Object.assign({}, this.obj[0])
+  tdHead.querySelector('.add').onclick = () => {
+    let tr = document.createElement('tr')
+    let created = this.elem.querySelector('tbody').appendChild(tr)
 
-//     for(key in createNewItem) {
-//       createNewItem[key] = ''
-//     }
-//     let created = this.elem.querySelector('tbody').appendChild(tr)
-
-//     createNewItem.__proto__ = this.obj[0].__proto__
-//     this.editStudents(createNewItem, created)
-//   }
-// }
+    this.editStudents(new this.func("empty", 0, "empty"), created)
+  }
+}
 
 // кнопки в теле таблици
 Table.prototype.createBodyButtons = function (elems) {
@@ -168,7 +124,7 @@ Table.prototype.editStudents = function(obj, item) {
     ` <td data-id="${obj.id}">${obj.id}</td>
       <td>
         <select onchange="setTeacher(${obj.id})" type="select" class="default" value="${obj.subj}">
-          ${Object.values(obj.__proto__.base).map( (value, index) =>
+          ${Object.values(obj.__proto__.base).map( value =>
             `<option value="${value.disc}" ${(obj.subj == value.disc) ? `selected` : ``}>${value.disc}</option>`
           ).join('')}
         </select>
@@ -264,3 +220,18 @@ var rangeValue = function (elem) {
 
   valueTarget.innerHTML = value
 }
+
+/*
+new Table([
+  new Row('head', [
+    new Cell('name', action),
+    new Cell('icon', 'plane', action)
+  ]),
+  new Row(false, [
+    new Cell('name', new RangeElem(...) )
+  ])
+])
+-----
+this.row.map(  row => this.cell => cell.map => ())
+*/
+

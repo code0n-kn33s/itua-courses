@@ -5,6 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
+    assets:  './common/js/common.js',
     lesson1: './lessons/lesson_1/script.js',
     lesson2: './lessons/lesson_2/script.js',
     lesson3: './lessons/lesson_3/script.js',

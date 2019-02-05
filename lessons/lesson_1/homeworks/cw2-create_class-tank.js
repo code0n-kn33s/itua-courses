@@ -1,4 +1,4 @@
-class Dron {
+class Drone {
   constructor(drone) {
     this.drone = drone
     this.droneParam = this.prop
@@ -36,15 +36,18 @@ class Opponent extends Dron {
     this.map = map
   }
   showOpponent() {
+    // drone
     return `противник: ${this.opponent} територия: ${this.map}`
   }
 }
 
-class Tank extends Opponent {
-  constructor(opponent, ammunition) {
+class User extends Opponent {
+  constructor(opponent, ammunition, action) {
     super(opponent, 'desert')
     this._ammunition = ammunition ? ammunition : 10
     console.log(this.showOpponent());
+
+    this.drone = new Drone(action);
   }
 
   showAmmunition() {
@@ -67,14 +70,11 @@ class Tank extends Opponent {
   }
 }
 
-let tank = new Tank("Kalasik", 6)
-console.log(tank);
-console.log(tank.droneParam);
-// tank.fireTo()
-// tank.fireTo()
+let tank = new User("Kalasik", 6)
+// console.log(tank);
+// console.log(tank.droneParam);
 // tank.fireTo()
 // tank.setAmmo(11)
-// tank.fireTo()
 // tank.fireTo()
 
 $('.code-2-1').innerHTML = Opponent
