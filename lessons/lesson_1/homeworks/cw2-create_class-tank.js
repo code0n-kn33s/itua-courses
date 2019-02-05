@@ -29,7 +29,7 @@ class Drone {
   }
 }
 
-class Opponent extends Dron {
+class Opponent extends Drone {
   constructor(opponent, map) {
     super('heal')
     this.opponent = opponent
@@ -45,7 +45,6 @@ class User extends Opponent {
   constructor(opponent, ammunition, action) {
     super(opponent, 'desert')
     this._ammunition = ammunition ? ammunition : 10
-    console.log(this.showOpponent());
 
     this.drone = new Drone(action);
   }
@@ -78,4 +77,4 @@ let tank = new User("Kalasik", 6)
 // tank.fireTo()
 
 $('.code-2-1').innerHTML = Opponent
-$('.code-2-2').innerHTML = Tank
+$('.code-2-2').innerHTML = User
