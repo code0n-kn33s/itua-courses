@@ -1,22 +1,55 @@
-class Map {
-  constructor(size, title) {
-    this._size = size
-    this._title = title
+class Dron {
+  constructor(drone) {
+    this.drone = drone
+    this.droneParam = this.prop
   }
-  setMap(size, title) {
-    this._size = size
-    this._title = title
+  showDrone() {
+    switch (this.drone) {
+      case ('heal') :
+        this.prop = {
+          hit:  100,
+          healing: this.health + hit
+        }
+        break
+      case ('attack') :
+        this.prop = {
+          hit:  50,
+          attack: this.enemy.health - hit
+        }
+        break
+      case ('scout') :
+        this.prop = {
+          hit:  0,
+          toScout: "Enemy location"
+        }
+        break
+      default :
+        'You havent drone'
+    }
   }
 }
 
-class Tank {
-  constructor(message, ammunition) {
-    // this.ammunition = 10
-    this._ammunition = ammunition ? ammunition : 10
-
-    console.log(message);
+class Opponent extends Dron {
+  constructor(opponent, map) {
+    super('heal')
+    this.opponent = opponent
+    this.map = map
   }
-  moveTo(x,y) {}
+  showOpponent() {
+    return `противник: ${this.opponent} територия: ${this.map}`
+  }
+}
+
+class Tank extends Opponent {
+  constructor(opponent, ammunition) {
+    super(opponent, 'desert')
+    this._ammunition = ammunition ? ammunition : 10
+    console.log(this.showOpponent());
+  }
+
+  showAmmunition() {
+    return `Снарядов ${this._ammunition}`
+  }
 
   fireTo(x,y) {
     console.log(this._ammunition < 1 ? 'Снаряды закончились' : 'Огонь', this._ammunition);
@@ -33,10 +66,10 @@ class Tank {
     }
   }
 }
-let tank = new Tank('New tank ready', 6)
 
-// console.log(tank);
-
+let tank = new Tank("Kalasik", 6)
+console.log(tank);
+console.log(tank.droneParam);
 // tank.fireTo()
 // tank.fireTo()
 // tank.fireTo()
@@ -44,4 +77,5 @@ let tank = new Tank('New tank ready', 6)
 // tank.fireTo()
 // tank.fireTo()
 
-$('.code-2-1').innerHTML = Tank
+$('.code-2-1').innerHTML = Opponent
+$('.code-2-2').innerHTML = Tank
