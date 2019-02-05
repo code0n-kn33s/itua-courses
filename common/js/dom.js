@@ -211,8 +211,7 @@ Table.prototype.editStudents = function(obj, item) {
       </tr>`
 
     td.innerHTML = html
-    // this.createBodyButtons([td])
-  }
+    this.createBodyButtons([td]) }
 }
 
 //toasts
