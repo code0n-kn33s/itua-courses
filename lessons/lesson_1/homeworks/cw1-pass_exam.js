@@ -3,16 +3,14 @@ let Discipline = function (discipline) {
   this.id = this.closureId()
   this.subj = discipline;
 
+  this.teacher = this.assignTeacher(discipline)
   this.__proto__.base = [
     { disc: "math", teacher: "Irina Anatolievna" },
     { disc: "computers", teacher: "Anna Josipevna" },
     { disc: "philosophy", teacher: "Ibragimov" },
   ]
-
-  Object.values(this.__proto__.base).forEach(value => {
-    if (value.disc == discipline) this.teacher = value.teacher
-  })
 };
+
 
 let Student = function (name, visits, discipline) {
   // инициализируем клас Discipline c параметром предмета
@@ -24,7 +22,18 @@ let Student = function (name, visits, discipline) {
   this.pass = this.pass(this.visits);
   this.perfomance = this.perfomance(this.visits);
 };
-
+Student.prototype.assignTeacher = function (discipline) {
+  switch (discipline) {
+    case ('math'):
+      return 'Irina Anatolievna'
+    case ('computers'):
+      return 'Anna Josipevna'
+    case ('philosophy'):
+      return 'Ibragimov'
+    default:
+      return 'Choose discipline'
+  }
+}
 Student.prototype.countId = () => { n = 1; return () => n++ }
 Student.prototype.closureId = Student.prototype.countId()
 
