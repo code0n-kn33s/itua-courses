@@ -58,54 +58,89 @@ class Sort {
 console.log(new Sort(ITEA_COURSES, 'word', false))
 console.log(new Sort(numbers, 'num', true))
 
-class RenderArr {
-    constructor(arr, elem, sort, search) {
+class Collection {
+    constructor(arr, elem, header) {
         this.arr = arr
         this.elem = elem
+        this.rendering = this.elem.querySelector('.collection')
 
-        this.elem.innerHTML = this.render(sort, search)
-
-        if (sort) this.clickingSort($('.sort'))
+        this.logic(header)
     }
-    clickingSort(elem) {
+
+    logic(header) {
+        if (header) {
+            this.elem.innerHTML = this.renderConstructor(
+                `${this.renderHeader()} ${this.renderBody()}`)
+
+            this.clickingSort(this.arr, $('.sort'))
+        } else {
+            this.elem.innerHTML = this.renderConstructor(
+                `${this.renderBody()}`)
+        }
+    }
+    clickingSort(arr, elem) {
         elem.addEventListener('click', sortingDown)
 
-        function sortingDown() {
+        function sortingDown(e) {
             this.removeEventListener('click', sortingDown)
             this.addEventListener('click', sortingUp)
-            console.log('sortingDown');
+
+            this.className = this.classList.value.slice(0, 5) + 'down'
+            this.querySelector('span').innerHTML = 'A-Z'
+            this.querySelector('span').className = 'fade'
+            console.log(new Sort(arr, 'word', true).arr)
+            console.log(this.parentElement);
+            e.stopPropagation()
         }
-        function sortingUp() {
+        function sortingUp(e) {
             this.removeEventListener('click', sortingUp)
             this.addEventListener('click', sortingNone)
-            console.log('sortingUp')
+
+            this.className = this.classList.value.slice(0, 5) + 'up'
+            this.querySelector('span').innerHTML = 'Z-A'
+            this.querySelector('span').className = 'fade'
+
+            new Sort(arr, 'word', false)
+
+            e.stopPropagation()
         }
-        function sortingNone() {
+        function sortingNone(e) {
             this.removeEventListener('click', sortingNone)
             this.addEventListener('click', sortingDown)
-            console.log('sortingNone')
+
+            this.className = this.classList.value.slice(0, 5) + 'none'
+            this.querySelector('span').innerHTML = 'ABC'
+            this.querySelector('span').classList.remove('fade')
+            this.querySelector('span').classList.add('fade')
+
+            new Sort(arr, 'word')
+
+            e.stopPropagation()
         }
     }
-    render(sort, search) {
+    renderConstructor(inner) {
         return `
-            <div>
-                ${ (sort) ? `
-                <label style="display: inline-block; margin-right: 20px;">
-                    <input id="indeterminate-checkbox" type="checkbox" />
-                    <span class="sort">A-Z</span>
-                </label>` : ``
-                }
-                ${ (search) ? `
+            <ul class="animate-list collection" style="width: 270px">${inner}</ul>`
+    }
+    renderHeader() {
+        return `
+            <li class="collection-header center-align">
+                <div class="sort none">
+                    <i class="material-icons">details</i>
+                    <span class="fade">ABC</span>
+                </div>
                 <div class="input-field inline">
                     <input id="email_inline" type="email" class="validate">
                     <label for="email_inline">search</label>
-                </div> ` : ``
-                }
-            </div>
-            <ul class="collection" style="width: 270px">
-                <li class="collection-header"><h4>ITEA_COURSES</h4></li>
-                ${this.arr.map(item => `<li class="collection-item">${item}</li>`).join('')}
-            </ul>`
+                </div>
+            </li>`
+    }
+    renderBody() {
+        return ` ${this.arr.map((item,index) =>
+                    `<li class="fadeDown collection-item"
+                         style="animation-delay: .${index + 2}s;">${item}
+                    </li>`).join('')
+                }`
     }
 }
-new RenderArr(ITEA_COURSES, $('.code-3-1'), true, true)
+new Collection(ITEA_COURSES, $('.code-3-1'), true)
