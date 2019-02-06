@@ -14,20 +14,6 @@ let Discipline = function (discipline) {
   })
 };
 
-Discipline.prototype.filterTeacher = function() {
-  return [
-    { disc: "math", teacher: "Irina Anatolievna" },
-    { disc: "computers", teacher: "Anna Josipevna" },
-    { disc: "philosophy", teacher: "Ibragimov" },
-  ]
-}
-
-Discipline.prototype.base = [
-  { disc: "math", teacher: "Irina Anatolievna" },
-  { disc: "computers", teacher: "Anna Josipevna" },
-  { disc: "philosophy", teacher: "Ibragimov" },
-];
-
 let Student = function (name, visits, discipline) {
   // инициализируем клас Discipline c параметром предмета
   // который будет проходить черес кейсы и подтягивать имя преподавателя
