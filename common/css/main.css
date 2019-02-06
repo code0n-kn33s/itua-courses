@@ -2,45 +2,58 @@
   box-sizing: border-box;
   outline: none !important;
 }
-html, body {
+
+html,
+body {
   padding: 0;
   margin: 0;
 }
+
+body {}
+
 h4 {
   color: #ee6e73;
   font-weight: 300;
 }
-td,th {
+
+td,
+th {
   padding: 10px 5px;
 }
+
 pre {
   line-height: 1em;
   background-origin: content-box;
   padding: 0 20px;
   white-space: pre-wrap;
   text-align: justify;
-  font-family: calibri,arial,sans-serif;
+  font-family: calibri, arial, sans-serif;
 }
+
 select.default {
   display: block;
 }
+
 .hljs-line-numbers {
-	text-align: right;
-	color: #999;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
+  text-align: right;
+  color: #999;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
-.hljs-ln-numbers{
+
+.hljs-ln-numbers {
   padding: 3px 3px !important;
   width: 30px !important;
 }
+
 .input-field {
   margin: 0;
 }
+
 @media only screen and (min-width: 993px) {
   #toast-container {
     top: 7%;
@@ -48,6 +61,7 @@ select.default {
 }
 
 /* input range */
+
 .range-value {
   text-align: center;
   font-weight: bold;
@@ -56,6 +70,7 @@ select.default {
   letter-spacing: -.07em;
   text-shadow: white 2px 2px 2px;
 }
+
 input[type="range"] {
   display: block;
   -webkit-appearance: none;
@@ -66,6 +81,7 @@ input[type="range"] {
   outline: 0;
   transform: translateY(7px);
 }
+
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   background-color: #e74c3c;
@@ -75,14 +91,81 @@ input[type="range"]::-webkit-slider-thumb {
   border: 2px solid white;
   cursor: pointer;
   transition: .3s ease-in-out;
-}​
-input[type="range"]::-webkit-slider-thumb:hover {
+}
+
+​ input[type="range"]::-webkit-slider-thumb:hover {
   background-color: white;
   border: 2px solid #e74c3c;
 }
+
 input[type="range"]::-webkit-slider-thumb:active {
   transform: scale(1.6);
 }
+
 .input-field>label:not(.label-icon).active {
   transform: translateY(-5px) scale(0.8)
+}
+
+.sort {
+  display: inline-block;
+  margin-right: 20px;
+  user-select: none;
+  cursor: pointer;
+}
+
+.sort * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.sort i {
+  transition: .5s cubic-bezier(0.8, 1.1, 0.2, -1);
+}
+
+.sort span {
+  width: 30px;
+  height: 28px;
+  display: inline-block;
+  text-align: right;
+}
+
+.fade {
+  animation: fadeIn .2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
+  }
+}
+
+.fadeDown {
+  animation: fadeDown .3s linear;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
+}
+
+.sort.up i {
+  transform: rotate(62deg)
+}
+
+.sort.down i {
+  transform: rotate(-120deg)
+}
+
+.sort.none i {
+  transform: rotate(-28deg)
 }

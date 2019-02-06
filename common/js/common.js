@@ -19,11 +19,11 @@ let tempHeader = `
     </a>
     <ul id="nav-mobile" class="left hide-on-med-and-down">
       ${lessonsJSON.map(item =>
-`<li class="tab">
-              <a href="../../lessons/lesson_${item.id}/lesson${item.id}.html">
-                lesson-${item.id}
-              </a>
-            </li>`).join("")}
+        `<li class="tab">
+          <a href="../../lessons/lesson_${item.id}/lesson${item.id}.html">
+            lesson-${item.id}
+          </a>
+        </li>`).join("")}
     </ul>
   </div>
   <div class="nav-content">
