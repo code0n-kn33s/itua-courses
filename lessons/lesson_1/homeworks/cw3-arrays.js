@@ -62,20 +62,19 @@ class Collection {
     constructor(arr, elem, header) {
         this.arr = arr
         this.elem = elem
-        this.rendering = this.elem.querySelector('.collection')
 
-        this.logic(header)
+        this.rendering(header)
     }
 
-    logic(header) {
+    rendering(header) {
         if (header) {
-            this.elem.innerHTML = this.renderConstructor(
-                `${this.renderHeader()} ${this.renderBody()}`)
+            this.elem.innerHTML =
+                this.renderWrap(this.renderHeader()) + this.renderWrap(this.renderBody(this.arr))
 
-            this.clickingSort(this.arr, $('.sort'))
+            // this.clickingSort(this.arr, $('.sort'))
         } else {
-            this.elem.innerHTML = this.renderConstructor(
-                `${this.renderBody()}`)
+            this.elem.innerHTML =
+                this.renderWrap( this.renderBody(this.arr) )
         }
     }
     clickingSort(arr, elem) {
@@ -117,14 +116,14 @@ class Collection {
 
             e.stopPropagation()
         }
+        console.log(this.elem.querySelectorAll('li'));
     }
-    renderConstructor(inner) {
-        return `
-            <ul class="animate-list collection" style="width: 270px">${inner}</ul>`
+    renderWrap(inner) {
+        return `<ul class="collection" style="width: 270px">${inner}</ul>`
     }
     renderHeader() {
         return `
-            <li class="collection-header center-align">
+            <div class="collection-header center-align">
                 <div class="sort none">
                     <i class="material-icons">details</i>
                     <span class="fade">ABC</span>
@@ -133,14 +132,12 @@ class Collection {
                     <input id="email_inline" type="email" class="validate">
                     <label for="email_inline">search</label>
                 </div>
-            </li>`
+            </div>`
     }
-    renderBody() {
-        return ` ${this.arr.map((item,index) =>
-                    `<li class="fadeDown collection-item"
-                         style="animation-delay: .${index + 2}s;">${item}
-                    </li>`).join('')
-                }`
+    renderBody(arr) {
+        return `${arr.map((item, index) =>
+                        `<li class="fadeDown collection-item"
+                             style="animation-delay: .${index + 2}s;">${item}</li>`).join('')}`
     }
 }
 new Collection(ITEA_COURSES, $('.code-3-1'), true)
