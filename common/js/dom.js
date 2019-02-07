@@ -1,6 +1,6 @@
 // TABLES
-let Table = function (obj, elem, title, buttons, obj_coustructor) {
-  this.obj = obj
+let Table = function (arr, elem, title, buttons, obj_coustructor) {
+  this.arr = arr
   this.elem = elem
   this.title = title
   this.editObjs = []
@@ -23,11 +23,11 @@ Table.prototype.parseObj = function(header) {
     `<h3>${this.title || ''}</h3>
     <table>
         ${ (!header) ? `<thead><tr>
-            ${Object.keys(this.obj[0]).map(value =>
+            ${Object.keys(this.arr[0]).map(value =>
               `<th class="${value}">${value}</th>`).join('')}
           </tr></thead>` : ``}
 
-          ${this.obj.map((parseObj) => `
+          ${this.arr.map((parseObj) => `
             <tr data-id="${parseObj.id}">
               ${Object.values(parseObj).map(value =>
                 `<td>${value}</td>`).join('')}
@@ -49,8 +49,10 @@ Table.prototype.createHeadButton = function () {
   tdHead.querySelector('.add').onclick = () => {
     let tr = document.createElement('tr')
     let created = this.elem.querySelector('tbody').appendChild(tr)
-
-    this.editStudents(new this.func("empty", 0, "empty"), created)
+    let newItem = new this.func("empty", 0, "empty")
+    this.arr.push(newItem)
+    tr.setAttribute('data-id', newItem.id)
+    this.editStudents(newItem, created)
   }
 }
 
@@ -68,7 +70,11 @@ Table.prototype.createBodyButtons = function (elems) {
     }
 
     tdBody.querySelector('.edit').onclick = () => {
-      this.editStudents(this.obj[item.getAttribute('data-id') - 1], item)
+      let idElem = item.getAttribute('data-id')
+      let obj = {}
+      this.arr.forEach(item => { if (parseInt(item.id) === parseInt(idElem)) obj = item })
+
+      this.editStudents(obj, item)
     }
   })
 }
@@ -83,7 +89,6 @@ Table.prototype.editStudents = function(obj, item) {
     const closestTeacher = event.target.parentNode.parentNode.querySelector('.teacher')
 
     this.editObjs.forEach(obj => { if (obj.id === index) return thisObj = obj } )
-
     thisObj.subj = event.target.value
 
     obj.__proto__.base.forEach(value => {
@@ -96,7 +101,8 @@ Table.prototype.editStudents = function(obj, item) {
   setPerformance = (index) => {
     const closest = event.target.parentNode.parentNode
 
-    this.editObjs.forEach(obj => { if (obj.id === index) return thisObj = obj })
+    this.editObjs.forEach(obj => {
+      if (obj.id === index) return thisObj = obj })
 
     let value = event.target.value;
     rangeValue()
@@ -237,4 +243,4 @@ this.row.map(  row => this.cell => cell.map => ())
 
 // machine click
 let machineEvent = new Event('click', { bubbles: true })
-$('.tabs .tab:nth-child(3) a').dispatchEvent(machineEvent)
+$('.tabs .tab:nth-child(1) a').dispatchEvent(machineEvent)
