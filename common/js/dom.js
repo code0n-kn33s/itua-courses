@@ -243,4 +243,4 @@ this.row.map(  row => this.cell => cell.map => ())
 
 // machine click
 let machineEvent = new Event('click', { bubbles: true })
-$('.tabs .tab:nth-child(1) a').dispatchEvent(machineEvent)
+$('.tabs .tab:nth-child(3) a').dispatchEvent(machineEvent)

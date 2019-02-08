@@ -10,11 +10,11 @@
 
 const ITEA_COURSES = ["C++", "JavaScript", "HTML/CSS", "Rubi", "Python", "Angular", "Abgular", "Broforse", "Vue", "Baracuda", "Node", "Aangular", "Doc"];
 
-const numbers = [3,2,4,5,6,9,1,4,6,2,1]
+const numbers = [3, 2, 4, 5, 6, 9, 1, 4, 6, 2, 1]
 
 class Sort {
     constructor(arr, type, direction) {
-        this.oldArray = arr.map(i=>i)
+        this.oldArray = arr.map(i => i)
         this.arr = arr
         this.type = type
         this.direction = direction
@@ -63,34 +63,39 @@ class Collection {
         this.arr = arr
         this.elem = elem
 
-        this.rendering(header)
+        this.rendering(this.arr, this.elem, header)
+
+        if(header) {
+            this.clickingSort(arr, $('.sort'))
+        }
     }
 
-    rendering(header) {
+    rendering(arr, elem, header) {
         if (header) {
-            this.elem.innerHTML =
-                this.renderWrap(this.renderHeader()) + this.renderWrap(this.renderBody(this.arr))
-
-            // this.clickingSort(this.arr, $('.sort'))
+            elem.innerHTML =
+                this.renderWrap(this.renderHeader()) +
+                this.renderWrap(this.renderBody(arr))
         } else {
-            this.elem.innerHTML =
-                this.renderWrap( this.renderBody(this.arr) )
+            elem.innerHTML =
+                this.renderWrap( this.renderBody(arr) )
         }
     }
     clickingSort(arr, elem) {
         elem.addEventListener('click', sortingDown)
+        let itemsList = this.elem.querySelector('ul:last-child')
 
         function sortingDown(e) {
-            this.removeEventListener('click', sortingDown)
-            this.addEventListener('click', sortingUp)
+            elem.removeEventListener('click', sortingDown.bind(this))
+            elem.addEventListener('click', sortingUp.bind(this))
 
-            this.className = this.classList.value.slice(0, 5) + 'down'
-            this.querySelector('span').innerHTML = 'A-Z'
-            this.querySelector('span').className = 'fade'
-            console.log(new Sort(arr, 'word', true).arr)
-            console.log(this.parentElement);
+            elem.className = elem.classList.value.slice(0, 5) + 'down'
+            elem.querySelector('span').innerHTML = 'A-Z'
+            elem.querySelector('span').className = 'fade'
+
+            this.rendering(new Sort(arr, 'word', true).arr, itemsList)
             e.stopPropagation()
         }
+
         function sortingUp(e) {
             this.removeEventListener('click', sortingUp)
             this.addEventListener('click', sortingNone)
@@ -99,8 +104,7 @@ class Collection {
             this.querySelector('span').innerHTML = 'Z-A'
             this.querySelector('span').className = 'fade'
 
-            new Sort(arr, 'word', false)
-
+            this.rendering(new Sort(arr, 'word', false).arr, itemsList)
             e.stopPropagation()
         }
         function sortingNone(e) {
@@ -112,11 +116,12 @@ class Collection {
             this.querySelector('span').classList.remove('fade')
             this.querySelector('span').classList.add('fade')
 
-            new Sort(arr, 'word')
+            // console.log(itemsList);
+            // console.log(new Sort(arr, 'word'))
+            this.rendering(new Sort(arr, 'word', false).arr, itemsList)
 
             e.stopPropagation()
         }
-        console.log(this.elem.querySelectorAll('li'));
     }
     renderWrap(inner) {
         return `<ul class="collection" style="width: 270px">${inner}</ul>`
@@ -136,8 +141,8 @@ class Collection {
     }
     renderBody(arr) {
         return `${arr.map((item, index) =>
-                        `<li class="fadeDown collection-item"
-                             style="animation-delay: .${index + 2}s;">${item}</li>`).join('')}`
+                `<li class="fadeDown collection-item"
+                     style="animation-delay: ${(Math.log(index + 1) / 4).toFixed(2)}s;">${item}</li>`).join('')}`
     }
 }
 new Collection(ITEA_COURSES, $('.code-3-1'), true)
